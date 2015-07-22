@@ -1,0 +1,44 @@
+{
+   "dirs" : {
+      "temporary":"tmp_profiler",
+      "bytecode":"bytecode",
+      "tuples":"tuples",
+      "fields":"fields",
+      "time":"time",
+      "data":"data"
+   }, 
+   "files" : {
+      "classes":"classes.txt",
+      "methods":"methods.txt",
+      "fields":"fields.txt",
+      "hierarchy":"hierarchy.txt",
+      "debug":"debug.txt",
+      "log":"log.csv",
+      "out":"stdout.txt",
+      "err":"stderr.txt",
+      "options":"options.txt",
+      "statistics":"stats.txt",
+      "white_list":"white_list.txt",
+      "black_list":"black_list.txt"
+   },
+   "tuples" : {
+      "targets":"targets.json",
+      "parameters":"parameters.json",
+      "results":"results.json",
+      "max_depth":"max_depth.txt",
+      "trace":"versions.bin",
+      "output":"versions.txt",
+      "depths":"depths.csv",
+      "final": "tuples.txt"    
+   },
+   "fields" : {
+      "trace":"fields.bin",
+      "output":"accesses.bin"
+   },
+   "time" : {
+      "profile":"profile.csv",
+      "trace":"time.bin",
+      "total":"total.txt",
+      "output":"time.txt"
+   }
+}

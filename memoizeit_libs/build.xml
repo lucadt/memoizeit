@@ -1,0 +1,27 @@
+<project name="memoize-it-lib" default="package">
+   
+   <property environment="env"/>
+   <property file="build.properties"/>
+   
+   <path id="buildpath">
+      <pathelement location="${asm.lib}"/>
+      <pathelement location="${gson.lib}"/>
+      <pathelement location="${google.guava.lib}"/>
+   </path>
+   
+   <target name="compile">
+      <mkdir dir="${bin}"/>
+      <javac srcdir="${src.lib}" destdir="${bin}" includeAntRuntime="false">
+         <classpath refid="buildpath" />
+      </javac>
+   </target>
+   
+   <target name="package" depends="compile">
+      <jar basedir="${bin}" destfile="${lib.jar}"/>
+   </target>
+   
+   <target name="clean">
+      <delete file="${lib.jar}" />
+   </target>
+   
+</project>

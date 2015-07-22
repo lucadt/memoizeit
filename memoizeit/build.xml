@@ -1,0 +1,121 @@
+<project name="memoize-it" default="package" basedir=".">
+   
+   <property environment="env"/>
+   <property file="build.properties"/>
+   
+   <target name="rename-jar-jar-manifest">
+      <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="${libs.dir}/jarjar-1.4.jar"/>
+      <jarjar jarfile="${jar-name}.temp">
+         <zipfileset src="${jar-name}"/>
+         <rule pattern="org.objectweb.asm.**" result="m.lib.instr.org.objectweb.asm.@1"/>
+         <rule pattern="com.google.**" result="m.lib.instr.com.google.@1"/>
+         <manifest>
+            <attribute name="Premain-Class" value="${jar-pre-main-class}"/>
+            <attribute name="Can-Redefine-Classes" value="true"/>
+            <attribute name="Can-Retransform-Classes" value="true"/>
+         </manifest>          
+      </jarjar>      
+      <move file="${jar-name}.temp" tofile="${jar-name}"/>
+   </target>
+   
+   <target name="rename-jar-jar">
+      <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="${libs.dir}/jarjar-1.4.jar"/>
+      <jarjar jarfile="${jar-name}.temp">
+         <zipfileset src="${jar-name}"/>
+         <rule pattern="org.objectweb.asm.**" result="m.lib.instr.org.objectweb.asm.@1"/>
+         <rule pattern="com.google.**" result="m.lib.instr.com.google.@1"/>        
+      </jarjar>
+      <move file="${jar-name}.temp" tofile="${jar-name}"/>
+   </target>
+   
+   <target name="create-jar-jar">
+      <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="${libs.dir}/jarjar-1.4.jar"/>
+      <jarjar jarfile="${dist.jar}">
+         <zipfileset src="${asm.lib}"/>
+         <zipfileset src="${google.guava.lib}"/>
+         <zipfileset src="${gson.lib}"/>
+         <rule pattern="org.objectweb.asm.**" result="m.lib.instr.org.objectweb.asm.@1"/>
+         <rule pattern="com.google.**" result="m.lib.instr.com.google.@1"/>         
+      </jarjar>
+   </target>
+      
+   <path id="buildpath">
+      <pathelement location="${asm.lib}"/>
+      <pathelement location="${gson.lib}"/>
+      <pathelement location="${google.guava.lib}"/>
+      <pathelement location="${lib.jar}"/>
+   </path>
+   
+   <target name="compile" depends="compile-all" />
+   
+   <target name="package-library">
+      <copy file="${mylib.jar}" todir="${jars.dir}"/>
+      <antcall target="rename-jar-jar">
+         <param name="jar-name" value="${lib.jar}"/>
+      </antcall>
+   </target>
+   
+   <target name="compile-all" depends="package-library">
+      <mkdir dir="${bin}"/>
+      <mkdir dir="${jars.dir}"/>
+      <javac srcdir="${src.tuples}" destdir="${bin}" includeAntRuntime="false">
+         <classpath refid="buildpath" />
+      </javac>
+      <javac srcdir="${src.fields}" destdir="${bin}" includeAntRuntime="false">
+         <classpath refid="buildpath" />
+      </javac>
+      <javac srcdir="${src.analysis}" destdir="${bin}" includeAntRuntime="false">
+         <classpath refid="buildpath" />
+      </javac>
+   </target>
+   
+   <target name="package-tuples" depends="compile">
+      <jar 
+         basedir="${bin}" destfile="${agent.tuples.jar}"
+         includes="memoizeit/tuples/agent/**"/>
+      <antcall target="rename-jar-jar-manifest">
+         <param name="jar-name" value="${agent.tuples.jar}"/>
+         <param name="jar-pre-main-class" value="memoizeit.tuples.agent.Agent"/>   
+      </antcall>
+   </target>
+      
+   <target name="package-fields" depends="compile">
+      <jar 
+         basedir="${bin}" destfile="${agent.fields.jar}"
+         includes="memoizeit/field/agent/**"/>
+      <antcall target="rename-jar-jar-manifest">
+         <param name="jar-name" value="${agent.fields.jar}"/>
+         <param name="jar-pre-main-class" value="memoizeit.field.agent.Agent"/>   
+      </antcall>
+   </target>
+   
+   <target name="package-profiler" depends="compile-all">
+      <jar 
+         basedir="${bin}" destfile="${profiler.jar}"
+         includes="memoizeit/tuples/instr/**, 
+      	  memoizeit/tuples/profiler/**,
+      	  memoizeit/tuples/serialization/**,
+      	  memoizeit/tuples/stats/**,
+      	  memoizeit/field/instr/**, 
+      	  memoizeit/field/profiler/**">
+         </jar>
+         <antcall target="rename-jar-jar">
+            <param name="jar-name" value="${profiler.jar}"/>
+         </antcall>
+      </target>
+      
+      <target name="package-analysis" depends="compile">
+         <jar basedir="${bin}" destfile="${analysis.jar}" includes="memoizeit/analysis/**"/>
+         <antcall target="rename-jar-jar">
+            <param name="jar-name" value="${analysis.jar}"/>
+         </antcall>
+      </target>
+      
+      <target name="package" depends="create-jar-jar, package-tuples, package-fields, package-profiler, package-library, package-analysis"/>
+      
+      <target name="clean">
+         <delete dir="${jars.dir}" />
+      </target>
+      
+   </project>
+   

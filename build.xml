@@ -1,0 +1,18 @@
+<project name="memoize-it-all" default="all">
+   
+   <property environment="env"/>
+   <property file="build.properties"/>
+   
+   <target name="clean">
+      <ant antfile="build.xml" target="clean" dir="${memoizeit.lib.dir}" />
+      <ant antfile="build.xml" target="clean" dir="${memoizeit.lib.dir}" /> 
+   </target>
+   
+   <target name="all">
+      <ant antfile="build.xml" target="clean" dir="${memoizeit.lib.dir}" />
+      <ant antfile="build.xml" target="package" dir="${memoizeit.lib.dir}"/>
+      <ant antfile="build.xml" target="clean" dir="${memoizeit.dir}" />
+      <ant antfile="build.xml" target="package" dir="${memoizeit.dir}"/>      
+   </target>
+            
+</project>
