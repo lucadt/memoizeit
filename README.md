@@ -12,16 +12,18 @@ The archive contains the virtual-machine image submitted for the OOPSLA artifact
 Inside the archive there is a document containing the steps necessary to reproduce the experiments presented in the paper.
 
 ### Folders
-This table provides a short description for each source folder in the repository.
+This table provides a short description for each source folder in the repository:
+
+
 Folder name | Notes
 ----------- | -----
-`memoizeit/jars` | Jar dependencies for compilation and execution.
-`memoizeit/python` | The directory contains the main execution runner for MemoizeIt.
-`memoizeit/src-analysis` | The source-code of the analyses for the Field access profiling and Input-output profiling.
-`memoizeit/src-profiler-fields` | Source-code of Field access profiling.
-`memoizeit/src-profiler-tuples` | Source-code of Input-output profiling.
-`memoizeit/black_list.txt` | Contains a list of not supported methods that cause MemoizeIt to crash.
-`memoizeit/options.json` | Legacy file kept for compatibility, used to setup various profiler output file names.
+memoizeit/jars | Jar dependencies for compilation and execution.
+memoizeit/python | The directory contains the main execution runner for MemoizeIt.
+memoizeit/src-analysis | The source-code of the analyses for the Field access profiling and Input-output profiling.
+memoizeit/src-profiler-fields | Source-code of Field access profiling.
+memoizeit/src-profiler-tuples | Source-code of Input-output profiling.
+memoizeit/black\_list.txt | Contains a list of not supported methods that cause MemoizeIt to crash.
+memoizeit/options.json | Legacy file kept for compatibility, used to setup various profiler output file names.
 
 In case of additional questions or help with the tool please
 please contact @lucadt [email](mailto:luca.dellatoffola@inf.ethz.ch) directly.
