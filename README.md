@@ -21,8 +21,7 @@ Folder name | Notes
 `memoizeit/src-profiler-fields` | Source-code of Field access profiling.
 `memoizeit/src-profiler-tuples` | Source-code of Input-output profiling.
 `memoizeit/black_list.txt` | Contains a list of not supported methods that cause MemoizeIt to crash.
-`memoizeit/options.json` | Legacy file kept for compatibility, used to setup various profiler
-output file names.
+`memoizeit/options.json` | Legacy file kept for compatibility, used to setup various profiler output file names.
 
 In case of additional questions or help with the tool please
 please contact @lucadt [email](mailto:luca.dellatoffola@inf.ethz.ch) directly.
@@ -54,7 +53,7 @@ To display all the command-line options use the command:
 python memoizeit/python/all.py --help
 ```
 The output of the command is supposed to be:
-```bash
+```
 usage: all.py [-h] [--path PATH] [--folder FOLDER] [--time] [--fields]
               [--memo] [--program PROGRAM] [--ranking] [--descriptions]
               [--limit LIMIT]
@@ -78,7 +77,7 @@ optional arguments:
                      function [exhaustive, inc1, pow2 (default)]
 ```
 The example command below executes a MemoizeIt complete analysis run for one of the programs that can be obtained with the option `--descriptions`.
-```bash
+```
 python memoizeit/python/all.py --path `pwd` --time --fields --memo --folder [output-folder] --limit [depth-function] --program [program-name]
 ```
 The parameter `[program-name]` is one of the identifiers returned by `--descriptions`. `[depth-function]` indicates the strategy to increment the depth of traversal, 
