@@ -16,7 +16,7 @@ This table provides a short description for each source folder in the repository
 
 
 Folder name | Notes
------------ | -----
+:----------- | :-----
 memoizeit/jars | Jar dependencies for compilation and execution.
 memoizeit/python | The directory contains the main execution runner for MemoizeIt.
 memoizeit/src-analysis | The source-code of the analyses for the Field access profiling and Input-output profiling.
